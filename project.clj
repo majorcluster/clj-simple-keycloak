@@ -1,4 +1,4 @@
-(defproject org.clojars.majorcluster/clj-simple-keycloak "0.1.0-SNAPSHOT"
+(defproject org.clojars.majorcluster/clj-simple-keycloak "0.1.0"
   :description "A clojure library to simply resolve authentication and authorization on an externally maintained keycloak server"
   :url "https://github.com/mtsbarbosa/clj-simple-keycloak"
   :license {:name "MIT"
