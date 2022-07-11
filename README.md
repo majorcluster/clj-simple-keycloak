@@ -1,6 +1,7 @@
 # clj-simple-keycloak
 
-![Clojars Project](https://img.shields.io/clojars/v/org.clojars.majorcluster/clj-simple-keycloak.svg) 
+
+[![Clojars Project](https://img.shields.io/clojars/v/org.clojars.majorcluster/clj-simple-keycloak.svg)](https://clojars.org/org.clojars.majorcluster/clj-simple-keycloak)  
 
 A Clojure library designed to authenticate 
 and authorize basic permissions at an external keycloak server
