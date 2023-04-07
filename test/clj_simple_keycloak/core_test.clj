@@ -1,6 +1,7 @@
 (ns clj-simple-keycloak.core-test
   (:require
-   [clj-simple-keycloak.core :refer [build-token-auth-header extract-token!! new-client-config]]
+   [clj-simple-keycloak.core :refer [build-token-auth-header extract-token!!
+                                     new-client-config]]
    [clojure.test :refer :all]
    [matcher-combinators.test])
   (:import
@@ -9,32 +10,32 @@
 (deftest extract-token-test
   (testing "When not having token error is thrown"
     (is (thrown-match?
-          ExceptionInfo {:type :simple-keycloak/missing-token}
-          (extract-token!! {})))
+         ExceptionInfo {:type :simple-keycloak/missing-token}
+         (extract-token!! {})))
     (is (thrown-match?
-          ExceptionInfo {:type :simple-keycloak/missing-token}
-          (extract-token!! {"Content-Type" "whatever"})))
+         ExceptionInfo {:type :simple-keycloak/missing-token}
+         (extract-token!! {"Content-Type" "whatever"})))
     (is (thrown-match?
-          ExceptionInfo {:type :simple-keycloak/missing-token}
-          (extract-token!! nil)))
+         ExceptionInfo {:type :simple-keycloak/missing-token}
+         (extract-token!! nil)))
     (is (thrown-match?
-          ExceptionInfo {:type :simple-keycloak/missing-token}
-          (extract-token!! {"Authorization" ""})))
+         ExceptionInfo {:type :simple-keycloak/missing-token}
+         (extract-token!! {"Authorization" ""})))
     (is (thrown-match?
-          ExceptionInfo {:type :simple-keycloak/missing-token}
-          (extract-token!! {"Authorization" nil})))
+         ExceptionInfo {:type :simple-keycloak/missing-token}
+         (extract-token!! {"Authorization" nil})))
     (is (thrown-match?
-          ExceptionInfo {:type :simple-keycloak/missing-token}
-          (extract-token!! {"Authorization" " "})))
+         ExceptionInfo {:type :simple-keycloak/missing-token}
+         (extract-token!! {"Authorization" " "})))
     (is (thrown-match?
-          ExceptionInfo {:type :simple-keycloak/missing-token}
-          (extract-token!! {"Authorization" "Bearer "})))
+         ExceptionInfo {:type :simple-keycloak/missing-token}
+         (extract-token!! {"Authorization" "Bearer "})))
     (is (thrown-match?
-          ExceptionInfo {:type :simple-keycloak/missing-token}
-          (extract-token!! {"Authorization" "Bearer  "})))
+         ExceptionInfo {:type :simple-keycloak/missing-token}
+         (extract-token!! {"Authorization" "Bearer  "})))
     (is (thrown-match?
-          ExceptionInfo {:type :simple-keycloak/missing-token}
-          (extract-token!! {"Authorization" "fdfdfdfd"}))))
+         ExceptionInfo {:type :simple-keycloak/missing-token}
+         (extract-token!! {"Authorization" "fdfdfdfd"}))))
   (testing "having a token it is extracted"
     (is (= "kdkdkdkdkd"
            (extract-token!! {"Authorization" "Bearer kdkdkdkdkd"})))))
@@ -52,7 +53,6 @@
   (testing "blank token is not added"
     (is (= {}
            (build-token-auth-header nil)))))
-
 
 (deftest new-client-config-test
   (testing "host and realm are used to build token url"

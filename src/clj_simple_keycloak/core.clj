@@ -15,7 +15,7 @@
         valid? (and not-blank?
                     (str/includes? s "Bearer"))]
     (if valid? (str/split s pattern)
-               [])))
+        [])))
 
 (defn extract-token!!
   "Extract token from headers"
@@ -44,18 +44,18 @@
   "receives a client config created from `new-client-config`, username and password and returns authentication tokens
   in case of error an ex-info w/ `:type :simple-keycloak/unauthorized` is thrown"
   ([http-port kc-client-config username password]
-    (let [opts {:timeout 2000
-                :form-params {:username username
-                              :password password
-                              :grant_type "password"
-                              :client_id (:kc-client-config/client-id kc-client-config)
-                              :client_secret (:kc-client-config/client-secret kc-client-config)}
-                :headers {"Content-Type" "application/x-www-form-urlencoded"
-                          "Accept" "*/*"}}
-          resp @((:kc-client-http-port/post-token http-port) kc-client-config opts)]
-      (cond (= 200 (:status resp)) (-> (:body resp)
-                                       (json/read-str))
-            :else (throw (ex-info "Unauthorized" {:type :simple-keycloak/unauthorized})))))
+   (let [opts {:timeout 2000
+               :form-params {:username username
+                             :password password
+                             :grant_type "password"
+                             :client_id (:kc-client-config/client-id kc-client-config)
+                             :client_secret (:kc-client-config/client-secret kc-client-config)}
+               :headers {"Content-Type" "application/x-www-form-urlencoded"
+                         "Accept" "*/*"}}
+         resp @((:kc-client-http-port/post-token http-port) kc-client-config opts)]
+     (cond (= 200 (:status resp)) (-> (:body resp)
+                                      (json/read-str))
+           :else (throw (ex-info "Unauthorized" {:type :simple-keycloak/unauthorized})))))
   ([kc-client-config username password]
    (authn!! http/port kc-client-config username password)))
 
@@ -65,14 +65,14 @@
   permission which auth user must have rights
   in case of error or not authorized an ex-info w/ `:type :simple-keycloak/unauthorized` is thrown"
   ([http-port kc-client-config headers permission]
-    (let [opts {:timeout 2000
-                :form-params {:grant_type "urn:ietf:params:oauth:grant-type:uma-ticket"
-                              :audience (:kc-client-config/client-id kc-client-config)
-                              :permission permission}
-                :headers (merge headers {"Content-Type" "application/x-www-form-urlencoded"
-                                          "Accept" "*/*"})}
-          resp @((:kc-client-http-port/post-token http-port) kc-client-config opts)]
-      (cond (= 200 (:status resp)) (:body resp)
-            :else (throw (ex-info "Unauthorized" {:type :simple-keycloak/unauthorized})))))
+   (let [opts {:timeout 2000
+               :form-params {:grant_type "urn:ietf:params:oauth:grant-type:uma-ticket"
+                             :audience (:kc-client-config/client-id kc-client-config)
+                             :permission permission}
+               :headers (merge headers {"Content-Type" "application/x-www-form-urlencoded"
+                                        "Accept" "*/*"})}
+         resp @((:kc-client-http-port/post-token http-port) kc-client-config opts)]
+     (cond (= 200 (:status resp)) (:body resp)
+           :else (throw (ex-info "Unauthorized" {:type :simple-keycloak/unauthorized})))))
   ([kc-client-config headers permission]
    (authz!! http/port kc-client-config headers permission)))
