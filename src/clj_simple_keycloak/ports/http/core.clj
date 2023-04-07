@@ -1,5 +1,6 @@
 (ns clj-simple-keycloak.ports.http.core
-  (:require [org.httpkit.client :as http]))
+  (:require
+   [org.httpkit.client :as http]))
 
 (defn- post-token
   [kc-client-config opts]

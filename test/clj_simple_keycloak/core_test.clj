@@ -1,8 +1,10 @@
 (ns clj-simple-keycloak.core-test
-  (:require [clojure.test :refer :all]
-            [matcher-combinators.test]
-            [clj-simple-keycloak.core :refer :all])
-  (:import (clojure.lang ExceptionInfo)))
+  (:require
+   [clj-simple-keycloak.core :refer [build-token-auth-header extract-token!! new-client-config]]
+   [clojure.test :refer :all]
+   [matcher-combinators.test])
+  (:import
+   (clojure.lang ExceptionInfo)))
 
 (deftest extract-token-test
   (testing "When not having token error is thrown"

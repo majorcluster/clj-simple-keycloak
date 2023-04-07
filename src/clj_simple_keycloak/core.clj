@@ -1,17 +1,13 @@
 (ns clj-simple-keycloak.core
-  (:require [clojure.string :as str]
-            [clj-simple-keycloak.ports.http.core :as http]
-            [clojure.data.json :as json]))
+  (:require
+   [clj-simple-keycloak.ports.http.core :as http]
+   [clojure.data.json :as json]
+   [clojure.string :as str]))
 
 (defn- get-or-throw
   [s ex-msg ext-type]
   (cond (str/blank? s) (throw (ex-info ex-msg {:type ext-type}))
         :else s))
-
-(defn print-n-continue
-  [m]
-  (println m)
-  m)
 
 (defn- split-opt
   [s pattern]
@@ -25,7 +21,6 @@
   "Extract token from headers"
   [headers]
   (-> (get headers "Authorization" " ")
-      (print-n-continue)
       (split-opt #"Bearer\s")
       (last)
       (get-or-throw "Missing token" :simple-keycloak/missing-token)))

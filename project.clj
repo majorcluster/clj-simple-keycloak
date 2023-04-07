@@ -1,10 +1,21 @@
-(defproject org.clojars.majorcluster/clj-simple-keycloak "0.2.1"
+(defproject org.clojars.majorcluster/clj-simple-keycloak "0.2.2"
   :description "A clojure library to simply resolve authentication and authorization on an externally maintained keycloak server"
   :url "https://github.com/majorcluster/clj-simple-keycloak"
   :license {:name "MIT"
             :url "https://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [http-kit "2.7.0-alpha1"]
-                 [org.clojure/data.json "2.4.0"]
-                 [nubank/matcher-combinators "3.8.4"]]
+                 [org.clojure/data.json "2.4.0"]]
+  :deploy-repositories [["clojars" {:url "https://repo.clojars.org"
+                                    :username :env/clojars_username
+                                    :password :env/clojars_password}]]
+  :profiles {:dev {:plugins [[com.github.clojure-lsp/lein-clojure-lsp "1.3.17"]]
+                   :dependencies [[nubank/matcher-combinators "3.8.3"]]}}
+  :aliases {"diagnostics"     ["clojure-lsp" "diagnostics"]
+            "format"          ["clojure-lsp" "format" "--dry"]
+            "format-fix"      ["clojure-lsp" "format"]
+            "clean-ns"        ["clojure-lsp" "clean-ns" "--dry"]
+            "clean-ns-fix"    ["clojure-lsp" "clean-ns"]
+            "lint"            ["do" ["diagnostics"]  ["format"] ["clean-ns"]]
+            "lint-fix"        ["do" ["format-fix"] ["clean-ns-fix"]]}
   :repl-options {:init-ns clj-simple-keycloak.core})

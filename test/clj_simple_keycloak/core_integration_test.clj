@@ -1,8 +1,10 @@
 (ns clj-simple-keycloak.core-integration-test
-  (:require [clojure.test :refer :all]
-            [matcher-combinators.test]
-            [clj-simple-keycloak.core :refer :all])
-  (:import (clojure.lang ExceptionInfo)))
+  (:require
+   [clj-simple-keycloak.core :refer [authn!! authz!! new-client-config]]
+   [clojure.test :refer :all]
+   [matcher-combinators.test])
+  (:import
+   (clojure.lang ExceptionInfo)))
 
 (def kc-client-config
   (new-client-config "http://anything" "anyrealm" "anyclient-id" "secret"))
